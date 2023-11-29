@@ -12,7 +12,6 @@ def create_session():
     return Session.builder.configs(connection_parameters).create()
   
 session = create_session()
-st.success("Connected to Snowflake!")
 
 
 #df_queries_exitosas
@@ -141,6 +140,28 @@ ORDER BY
 """).collect()
 
 col1, col2, col3 = st.columns(3)
-col2.metric("Numero de Queries exitosas ultimo mes",df_queries_exitosas[0][1],df_queries_exitosas[0][2])
-col3.metric("Numero de Queries fallidas ultimo mes",df_queries_fallidas[0][1],df_queries_fallidas[0][2])
-col1.metric("Numero de Queries total ultimo mes",df_queries[0][1],df_queries[0][2])
+col2.metric("Numero de Queries exitosas",df_queries_exitosas[0][1],df_queries_exitosas[0][2])
+col3.metric("Numero de Queries fallidas",df_queries_fallidas[0][1],df_queries_fallidas[0][2])
+col1.metric("Numero de Queries total",df_queries[0][1],df_queries[0][2])
+
+
+st.subheader("Numero de consultas ejecutadas por WH en el ultimo mes", divider='rainbow')
+#Numero de consultas ejecutadas por WH en el ultimo mes
+df_wh_q = session.sql("""
+  SELECT
+  WAREHOUSE_NAME,
+  COUNT(*) AS NUMERO_DE_CONSULTAS
+FROM
+  ACCOUNT_USAGE.QUERY_HISTORY
+WHERE
+  END_TIME >= DATE_TRUNC('MONTH', CURRENT_DATE()) - INTERVAL '1 MONTH' AND WAREHOUSE_NAME IS NOT NULL -- Filtra por el último mes
+GROUP BY
+  WAREHOUSE_NAME
+  HAVING
+  COUNT(*) > 100
+ORDER BY
+  NUMERO_DE_CONSULTAS DESC
+""")
+
+st.bar_chart(df_wh_q,x= "WAREHOUSE_NAME" ,y= "NUMERO_DE_CONSULTAS")
+
