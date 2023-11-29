@@ -14,3 +14,7 @@ def create_session():
 session = create_session()
 st.success("Connected to Snowflake!")
 
+df = session.sql("select user_name, count(*) as Queries  from snowflake.account_usage.query_history;")
+
+st.write(df)
+
