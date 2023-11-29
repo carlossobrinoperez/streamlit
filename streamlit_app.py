@@ -256,3 +256,46 @@ st.bar_chart(df_q_fail_frec,x= "QUERY_TEXT" ,y= "FRECUENCIA_DE_FALLO")
 st.write("Media de tiempo de ejecución de consultas por usuario (En minutos)")
 st.line_chart(df_q_user,x= "USER_NAME" ,y= "AVERAGE_EXECUTION_TIME")
 
+
+# TOP 5 Historico Tiempo de ejecución por tipo de consulta (Media en segundos)
+df_query_time = session.sql(""" select
+    query_type,
+    warehouse_size,
+    round(avg(execution_time) / 1000, 2) as average_execution_time // en segundos
+from
+    SNOWFLAKE.account_usage.query_history
+where
+    start_time = :daterange
+group by 1,2
+order by 3 desc
+limit 5
+""")
+
+st.write("Tiempo total de ejecución por consultas repetidas (Histórico)")
+st.bar_chart(df_query_time,x= "QUERY_TYPE" ,y= "AVERAGE_EXECUTION_TIME")
+
+# Tiempo total de ejecución por consultas repetidas (Histórico)
+df_query_time = session.sql(""" select
+    query_text,
+    round((sum(execution_time) / 60000)) as exec_time //en minutos
+from
+    SNOWFLAKE.account_usage.query_history
+where
+    execution_status = 'SUCCESS'
+group by
+    query_text
+order by
+    exec_time desc
+limit 5
+""")
+
+st.write("Tiempo total de ejecución por consultas repetidas (Histórico)")
+st.bar_chart(df_query_time,x= "QUERY_TEXT" ,y= "EXEC_TIME")
+
+
+
+
+
+
+
+
