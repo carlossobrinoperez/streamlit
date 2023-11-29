@@ -249,7 +249,7 @@ order by 2 desc;
 
 
 st.write("Consultas falladas y con que frecuencia en el ultimo mes")
-cst.bar_chart(df_q_fail_frec,x= "QUERY_TEXT" ,y= "FRECUENCIA_DE_FALLO")
+st.bar_chart(df_q_fail_frec,x= "QUERY_TEXT" ,y= "FRECUENCIA_DE_FALLO")
 
 col1, col2= st.columns(2)
 col1.write("Numero de consultas ejecutadas por DB")
