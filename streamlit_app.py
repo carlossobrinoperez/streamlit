@@ -16,5 +16,6 @@ st.success("Connected to Snowflake!")
 
 df = session.sql("select user_name, count(*) as Queries  from snowflake.account_usage.query_history;")
 
-st.write(df)
+for row in df.itertuples():
+    st.write(f"{row.user_name} ha realizado{row.Queries} queries")
 
