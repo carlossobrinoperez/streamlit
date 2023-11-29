@@ -201,3 +201,20 @@ ORDER BY
 
 st.write("Total de consultas ejecutadas el ultimo mes")
 st.bar_chart(df_queries, y= "NUMERO_DE_CONSULTAS" , x= "QUERY_TYPE" )
+
+
+# Duracion media de queries por mes (En segundos)
+
+df_q_sec = session.sql("""SELECT
+  TO_CHAR(DATE_TRUNC('MONTH', END_TIME), 'MM/YYYY') AS MES_FORMATO,
+  round(AVG(EXECUTION_TIME) / 1000,2) AS DURACION_MEDIA_EN_SEGUNDOS
+FROM
+  SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY
+GROUP BY
+  MES_FORMATO
+ORDER BY
+  MES_FORMATO DESC
+""")
+
+st.write("Duracion media de queries por mes (En segundos)")
+st.line_chart(df_queries, y= "DURACION_MEDIA_EN_SEGUNDOS" , x= "MES_FORMATO" )
