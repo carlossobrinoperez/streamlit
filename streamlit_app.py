@@ -217,5 +217,39 @@ ORDER BY
 
 #st.dataframe(df_q_sec)
 
-st.write("Duracion media de queries por dia (En segundos)")
+st.write("Duracion media de queries por dia (En milisegundos)")
 st.line_chart(df_q_sec, y= "DURACION_MEDIA_MILISEGUNDOS" , x="DAY_FORMATO" )
+
+
+# Consultas falladas y con que frecuencia en el ultimo mes
+df_q_fail_frec = session.sql(""" SELECT
+  TO_CHAR(DATE_TRUNC('MONTH', END_TIME), 'MM/YYYY') AS MES_FORMATO,
+  QUERY_TEXT,
+  COUNT(*) AS FRECUENCIA_DE_FALLO
+FROM
+  SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY
+WHERE
+  END_TIME >= DATE_TRUNC('MONTH', CURRENT_DATE()) - INTERVAL '1 MONTH' -- Filtra por el último mes
+  AND EXECUTION_STATUS <> 'SUCCESS' -- Filtra por consultas fallidas
+GROUP BY
+  MES_FORMATO,
+  QUERY_TEXT
+ORDER BY
+  MES_FORMATO DESC, FRECUENCIA_DE_FALLO DESC
+  LIMIT 10 """)
+
+# Media de tiempo de ejecución de consultas por usuario (En minutos)
+df_q_user = session.sql(""" select
+    user_name,
+    round((avg(execution_time)) / 60) as AVERAGE_EXECUTION_TIME
+from account_usage.query_history
+group by 1
+order by 2 desc;
+""")
+
+col1, col2= st.columns(2)
+col1.write("Consultas falladas y con que frecuencia en el ultimo mes")
+col1.bar_chart(df_q_fail_frec,x= "QUERY_TEXT" ,y= "FRECUENCIA_DE_FALLO")
+col2.write("Numero de consultas ejecutadas por DB")
+col2.line_chart(df_q_user,x= "USER_NAME" ,y= "AVERAGE_EXECUTION_TIME")
+
