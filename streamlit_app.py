@@ -242,14 +242,16 @@ ORDER BY
 df_q_user = session.sql(""" select
     user_name,
     round((avg(execution_time)) / 60) as AVERAGE_EXECUTION_TIME
-from account_usage.query_history
+from SNOWFLAKE.account_usage.query_history
 group by 1
 order by 2 desc;
 """)
 
+
+st.write("Consultas falladas y con que frecuencia en el ultimo mes")
+cst.bar_chart(df_q_fail_frec,x= "QUERY_TEXT" ,y= "FRECUENCIA_DE_FALLO")
+
 col1, col2= st.columns(2)
-col1.write("Consultas falladas y con que frecuencia en el ultimo mes")
-col1.bar_chart(df_q_fail_frec,x= "QUERY_TEXT" ,y= "FRECUENCIA_DE_FALLO")
-col2.write("Numero de consultas ejecutadas por DB")
-col2.line_chart(df_q_user,x= "USER_NAME" ,y= "AVERAGE_EXECUTION_TIME")
+col1.write("Numero de consultas ejecutadas por DB")
+col1.line_chart(df_q_user,x= "USER_NAME" ,y= "AVERAGE_EXECUTION_TIME")
 
