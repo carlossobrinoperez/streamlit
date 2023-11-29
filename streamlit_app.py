@@ -251,7 +251,6 @@ order by 2 desc
 st.write("Consultas falladas y con que frecuencia en el ultimo mes")
 st.bar_chart(df_q_fail_frec,x= "QUERY_TEXT" ,y= "FRECUENCIA_DE_FALLO")
 
-col1, col2= st.columns(2)
-col1.write("Numero de consultas ejecutadas por DB")
-col1.line_chart(df_q_user,x= "USER_NAME" ,y= "AVERAGE_EXECUTION_TIME")
+st.write("Media de tiempo de ejecución de consultas por usuario (En minutos)")
+st.line_chart(df_q_user,x= "USER_NAME" ,y= "AVERAGE_EXECUTION_TIME")
 
