@@ -16,5 +16,6 @@ st.success("Connected to Snowflake!")
 
 st.title("Top 10 queris lanzadas por Users")
 df = session.sql("select user_name, count(*) as Queries from snowflake.account_usage.query_history group by 1 order by Queries limit 10")
+st.dataframe(df)
 st.bar_chart(df, x="USER_NAME", y= "QUERIES")
 
