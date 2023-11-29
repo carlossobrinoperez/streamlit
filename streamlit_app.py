@@ -217,5 +217,5 @@ ORDER BY
 
 st.dataframe(df_q_sec)
 
-#st.write("Duracion media de queries por dia (En segundos)")
-#st.line_chart(df_q_sec, y= "DURACION_MEDIA_EN_SEGUNDOS" , x= "DAY_FORMATO" )
+st.write("Duracion media de queries por dia (En segundos)")
+st.line_chart(df_q_sec, y= "DURACION_MEDIA_EN_SEGUNDOS" , x= "DAY_FORMATO" )
