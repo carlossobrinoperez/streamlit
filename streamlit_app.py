@@ -217,4 +217,4 @@ ORDER BY
 """)
 
 st.write("Duracion media de queries por mes (En segundos)")
-st.line_chart(df_queries, y= "DURACION_MEDIA_EN_SEGUNDOS" , x= "MES_FORMATO" )
+st.line_chart(df_q_sec, y= "DURACION_MEDIA_EN_SEGUNDOS" , x= "MES_FORMATO" )
