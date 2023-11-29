@@ -173,12 +173,12 @@ GROUP BY
   HAVING
   COUNT(*) > 100
 ORDER BY
-  NUMERO_DE_CONSULTAS DESC;
+  NUMERO_DE_CONSULTAS DESC
 """)
 
 col1, col2= st.columns(2)
-col1.write("# Numero de consultas ejecutadas por WH")
+col1.write("Numero de consultas ejecutadas por WH")
 col1.bar_chart(df_wh_q,x= "WAREHOUSE_NAME" ,y= "NUMERO_DE_CONSULTAS")
-col2.write("# Numero de consultas ejecutadas por DB")
+col2.write("Numero de consultas ejecutadas por DB")
 col2.bar_chart(df_db_q,x= "DATABASE_NAME" ,y= "NUMERO_DE_CONSULTAS")
 
