@@ -15,5 +15,5 @@ session = create_session()
 st.success("Connected to Snowflake!")
 
 df = session.sql("select user_name, count(*) from snowflake.account_usage.query_history group by 1")
-st.dataframe(df)
+st.bar_chart(df)
 
