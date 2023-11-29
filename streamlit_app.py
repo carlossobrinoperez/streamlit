@@ -1,6 +1,9 @@
 from snowflake.snowpark import Session
 import streamlit as st
 
+st.sidebar.markdown("# Queries Control")
+st.sidebar.markdown("Resumen mediante gráficos e informes las diferentes Queries ajecutadas en la plataforma")	
+
 st.title("Queries Control")
 
 def create_session():
