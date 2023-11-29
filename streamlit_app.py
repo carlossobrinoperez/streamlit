@@ -145,7 +145,6 @@ col3.metric("Numero de Queries fallidas",df_queries_fallidas[0][1],df_queries_fa
 col1.metric("Numero de Queries total",df_queries[0][1],df_queries[0][2])
 
 
-st.subheader("Numero de consultas ejecutadas por WH en el ultimo mes", divider='rainbow')
 #Numero de consultas ejecutadas por WH en el ultimo mes
 df_wh_q = session.sql("""
   SELECT
@@ -161,14 +160,12 @@ ORDER BY
   NUMERO_DE_CONSULTAS DESC
 """)
 
-
-st.subheader("Numero de consultas ejecutadas por WH en el ultimo mes", divider='rainbow')
 #Numero de consultas ejecutadas por WH en el ultimo mes
 df_db_q = session.sql("""SELECT
   DATABASE_NAME,
   COUNT(*) AS NUMERO_DE_CONSULTAS
 FROM
-  ACCOUNT_USAGE.QUERY_HISTORY
+  SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY
 WHERE
   END_TIME >= DATE_TRUNC('MONTH', CURRENT_DATE()) - INTERVAL '1 MONTH' AND DATABASE_NAME IS NOT NULL -- Filtra por el último mes
 GROUP BY
@@ -180,6 +177,8 @@ ORDER BY
 """)
 
 col1, col2= st.columns(2)
+col1.write("# Numero de consultas ejecutadas por WH")
 col1.bar_chart(df_wh_q,x= "WAREHOUSE_NAME" ,y= "NUMERO_DE_CONSULTAS")
+col2.write("# Numero de consultas ejecutadas por DB")
 col2.bar_chart(df_db_q,x= "DATABASE_NAME" ,y= "NUMERO_DE_CONSULTAS")
 
