@@ -15,7 +15,7 @@ session = create_session()
 st.success("Connected to Snowflake!")
 
 st.title("Top 10 queris lanzadas por Users")
-df = session.sql("WITH ConsultasEsteMes AS (
+df = session.sql("""WITH ConsultasEsteMes AS (
   SELECT
     TO_CHAR(DATE_TRUNC('MONTH', END_TIME), 'MM/YYYY') AS MES_FORMATO,
     COUNT(*) AS NUMERO_DE_CONSULTAS_EXITOSAS
@@ -51,6 +51,6 @@ SELECT
 FROM
   ConsultasMesAnterior
 ORDER BY
-  MES_FORMATO DESC")
+  MES_FORMATO DESC""")
 st.dataframe(df)
 
