@@ -200,4 +200,4 @@ ORDER BY
 """)
 
 st.write("Total de consultas ejecutadas el ultimo mes")
-st.bar_chart(df_queries, x= "NUMERO_DE_CONSULTAS" , y= "QUERY_TYPE", use_container_width=True )
+st.bar_chart(df_queries, y= "NUMERO_DE_CONSULTAS" , x= "QUERY_TYPE" )
