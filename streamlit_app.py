@@ -187,7 +187,7 @@ df_queries = session.sql("""SELECT
   QUERY_TYPE,
   COUNT(*) AS NUMERO_DE_CONSULTAS
 FROM
-  ACCOUNT_USAGE.QUERY_HISTORY
+  SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY
 WHERE
   END_TIME >= DATE_TRUNC('MONTH', CURRENT_DATE()) -- Filtra por el mes actual
 GROUP BY
@@ -200,4 +200,4 @@ ORDER BY
 """)
 
 st.write("Total de consultas ejecutadas el ultimo mes")
-st.bar_chart(df_queries, x= "NUMERO_DE_CONSULTAS" , y= "QUERY_TYPE" )
+st.bar_chart(df_queries, x= "NUMERO_DE_CONSULTAS" , y= "QUERY_TYPE", use_container_width=True )
