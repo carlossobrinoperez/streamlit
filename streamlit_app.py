@@ -180,3 +180,24 @@ col1.bar_chart(df_wh_q,x= "WAREHOUSE_NAME" ,y= "NUMERO_DE_CONSULTAS")
 col2.write("Numero de consultas ejecutadas por DB")
 col2.bar_chart(df_db_q,x= "DATABASE_NAME" ,y= "NUMERO_DE_CONSULTAS")
 
+#Total de consultas ejecutadas el ultimo mes
+
+df_queries = session.sql("""SELECT
+  TO_CHAR(DATE_TRUNC('MONTH', END_TIME), 'MM/YYYY') AS MES_FORMATO,
+  QUERY_TYPE,
+  COUNT(*) AS NUMERO_DE_CONSULTAS
+FROM
+  ACCOUNT_USAGE.QUERY_HISTORY
+WHERE
+  END_TIME >= DATE_TRUNC('MONTH', CURRENT_DATE()) -- Filtra por el mes actual
+GROUP BY
+  MES_FORMATO,
+  QUERY_TYPE
+  HAVING
+  COUNT(*) > 10
+ORDER BY
+  MES_FORMATO DESC, QUERY_TYPE
+""")
+
+st.write("Total de consultas ejecutadas el ultimo mes")
+st.bar_chart(df_queries, x= "NUMERO_DE_CONSULTAS" , y= "QUERY_TYPE" )
