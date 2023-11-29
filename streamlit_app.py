@@ -51,6 +51,6 @@ SELECT
 FROM
   ConsultasMesAnterior
 ORDER BY
-  MES_FORMATO DESC""")
-st.dataframe(df)
-st.metric(df)
+  MES_FORMATO DESC""").collect()
+st.write(df)
+st.metric("Numero de consultas exitosas del ultimo mes y comparativa con el mes anterior",df[0][1],df[0][2])
