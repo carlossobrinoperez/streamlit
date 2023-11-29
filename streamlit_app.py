@@ -244,7 +244,7 @@ df_q_user = session.sql(""" select
     round((avg(execution_time)) / 60) as AVERAGE_EXECUTION_TIME
 from SNOWFLAKE.account_usage.query_history
 group by 1
-order by 2 desc;
+order by 2 desc
 """)
 
 
