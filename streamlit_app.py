@@ -205,7 +205,7 @@ st.bar_chart(df_queries, y= "NUMERO_DE_CONSULTAS" , x= "QUERY_TYPE" )
 
 # Duracion media de queries por mes (En segundos)
 
-df_q_sec = session.sql("""SELECT END_TIME AS DAY_FORMATO,
+df_q_sec = session.sql("""SELECT DATE(END_TIME) AS DAY_FORMATO,
   round(AVG(EXECUTION_TIME) / 1000,2) AS DURACION_MEDIA_EN_SEGUNDOS
 FROM
   SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY
