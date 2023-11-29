@@ -53,4 +53,4 @@ FROM
 ORDER BY
   MES_FORMATO DESC""")
 st.dataframe(df)
-st.metric(df.collect())
+st.metric(df)
