@@ -16,6 +16,6 @@ st.success("Connected to Snowflake!")
 
 df = session.sql("select user_name, count(*) as Queries from snowflake.account_usage.query_history group by user_name")
 
-df.show()
-
+for row in df:
+    st.write(f"{row[0]} has a :{row[1]}:")
 
