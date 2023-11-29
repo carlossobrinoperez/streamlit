@@ -161,5 +161,25 @@ ORDER BY
   NUMERO_DE_CONSULTAS DESC
 """)
 
-st.bar_chart(df_wh_q,x= "WAREHOUSE_NAME" ,y= "NUMERO_DE_CONSULTAS")
+
+st.subheader("Numero de consultas ejecutadas por WH en el ultimo mes", divider='rainbow')
+#Numero de consultas ejecutadas por WH en el ultimo mes
+df_db_q = session.sql("""SELECT
+  DATABASE_NAME,
+  COUNT(*) AS NUMERO_DE_CONSULTAS
+FROM
+  ACCOUNT_USAGE.QUERY_HISTORY
+WHERE
+  END_TIME >= DATE_TRUNC('MONTH', CURRENT_DATE()) - INTERVAL '1 MONTH' AND DATABASE_NAME IS NOT NULL -- Filtra por el último mes
+GROUP BY
+  DATABASE_NAME
+  HAVING
+  COUNT(*) > 100
+ORDER BY
+  NUMERO_DE_CONSULTAS DESC;
+""")
+
+col1, col2= st.columns(2)
+col1.bar_chart(df_wh_q,x= "WAREHOUSE_NAME" ,y= "NUMERO_DE_CONSULTAS")
+col2.bar_chart(df_db_q,x= "DATABASE_NAME" ,y= "NUMERO_DE_CONSULTAS")
 
