@@ -5,7 +5,8 @@ st.markdown("# Main page")
 st.sidebar.markdown("# Main page")
 
 def create_session():
-    return Session.builder.configs(st.secrets.snowflake).create()
+    connection_parameters = st.secrets["snowflake"]
+    return Session.builder.configs(connection_parameters).create()
   
 session = create_session()
 st.success("Connected to Snowflake!")
