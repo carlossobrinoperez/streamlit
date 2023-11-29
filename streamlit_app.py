@@ -1,8 +1,9 @@
 from snowflake.snowpark import Session
 import streamlit as st
 
-st.markdown("# Main page")
-st.sidebar.markdown("# Main page")
+st.markdown("# Queries Control")
+st.markdown("Resumen mediante gráficos e informes las Queries que se estan ejecutando en la plataforma")
+st.title("Queries Control")
 
 def create_session():
     connection_parameters = {
