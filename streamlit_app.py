@@ -297,7 +297,7 @@ df_query_time_10 = session.sql(""" select
     round((TOTAL_ELAPSED_TIME / 1000), 2) as "Tiempo_ejecucion(SEC)",
     USER_NAME as USER
 from
-    account_usage.query_history
+    SNOWFLAKE.account_usage.query_history
 where
     execution_status = 'SUCCESS'
 order by
