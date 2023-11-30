@@ -291,6 +291,23 @@ st.write("Tiempo total de ejecución por consultas repetidas (Histórico)")
 st.bar_chart(df_query_time,x= "QUERY_TEXT" ,y= "EXEC_TIME")
 
 
+# TOP 10 Consultas con mas tiempo de ejecución (Histórico)
+df_query_time_10 = session.sql(""" select
+    query_text,
+    round((TOTAL_ELAPSED_TIME / 1000), 2) as "Tiempo_ejecucion(SEC)",
+    USER_NAME as USER
+from
+    account_usage.query_history
+where
+    execution_status = 'SUCCESS'
+order by
+    total_elapsed_time desc
+limit 10
+""")
+
+st.write("TOP 10 Consultas con mas tiempo de ejecución (Histórico)")
+st.bar_chart(df_query_time_10,x= "QUERY_TEXT" ,y= "EXEC_TIME")
+
 
 
 
