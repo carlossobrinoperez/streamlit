@@ -306,7 +306,7 @@ limit 10
 """)
 
 st.write("TOP 10 Consultas con mas tiempo de ejecución (Histórico)")
-st.bar_chart(df_query_time_10,x= "QUERY_TEXT" ,y= "EXEC_TIME")
+st.bar_chart(df_query_time_10,x= "QUERY_TEXT" ,y= "Tiempo_ejecucion(SEC)")
 
 
 
