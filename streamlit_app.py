@@ -264,8 +264,6 @@ df_query_time = session.sql(""" select
     round(avg(execution_time) / 1000, 2) as average_execution_time // en segundos
 from
     SNOWFLAKE.account_usage.query_history
-where
-    start_time = :daterange
 group by 1,2
 order by 3 desc
 limit 5
