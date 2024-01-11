@@ -8,7 +8,7 @@ st.title("Queries Control")
 
 def create_session():
     connection_parameters = {
-        "account": "wxtkgj-zl40439",
+        "account": "bwxtkgj-zl40439",
         "user": "Carlos",
         "password": "Temp1234"}
     return Session.builder.configs(connection_parameters).create()
